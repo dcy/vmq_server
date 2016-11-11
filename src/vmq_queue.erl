@@ -383,7 +383,7 @@ offline(init_offline_queue, #state{id=SId} = State) ->
             {next_state, offline, State}
     end;
 offline({enqueue, Msg}, #state{id=SId} = State) ->
-    _ = vmq_plugin:all(on_offline_message, [SId]),
+    _ = vmq_plugin:all(on_offline_message, [SId, Msg]),
     %% storing the message in the offline queue
     _ = vmq_metrics:incr_queue_in(),
     {next_state, offline, insert(Msg, State)};
